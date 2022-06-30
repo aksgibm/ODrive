@@ -334,7 +334,7 @@ bool Encoder::abs_spi_init(){
     spi->Init.CLKPolarity = SPI_POLARITY_LOW;
     spi->Init.CLKPhase = SPI_PHASE_2EDGE;
     spi->Init.NSS = SPI_NSS_SOFT;
-    spi->Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_32;
+    spi->Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
     spi->Init.FirstBit = SPI_FIRSTBIT_MSB;
     spi->Init.TIMode = SPI_TIMODE_DISABLE;
     spi->Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -483,7 +483,7 @@ bool Encoder::update() {
             if (abs_spi_pos_updated_ == false) {
                 // Low pass filter the error
                 spi_error_rate_ += current_meas_period * (1.0f - spi_error_rate_);
-                if (spi_error_rate_ > 0.005f)
+                if (spi_error_rate_ > 0.05f)
                     set_error(ERROR_ABS_SPI_COM_FAIL);
             } else {
                 // Low pass filter the error
